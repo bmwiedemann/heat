@@ -121,7 +121,7 @@ class Stack(BASE, HeatBase, SoftDelete, StateAware):
         nullable=False)
     raw_template = relationship(RawTemplate, backref=backref('stack'))
     username = sqlalchemy.Column(sqlalchemy.String(256))
-    tenant = sqlalchemy.Column(sqlalchemy.String(256))
+    tenant = sqlalchemy.Column(sqlalchemy.String(64))
     parameters = sqlalchemy.Column('parameters', Json)
     user_creds_id = sqlalchemy.Column(
         sqlalchemy.Integer,
@@ -164,7 +164,7 @@ class UserCreds(BASE, HeatBase):
     decrypt_method = sqlalchemy.Column(sqlalchemy.String(64))
     tenant = sqlalchemy.Column(sqlalchemy.String(1024))
     auth_url = sqlalchemy.Column(sqlalchemy.String)
-    tenant_id = sqlalchemy.Column(sqlalchemy.String(256))
+    tenant_id = sqlalchemy.Column(sqlalchemy.String(64))
     trust_id = sqlalchemy.Column(sqlalchemy.String(255))
     trustor_user_id = sqlalchemy.Column(sqlalchemy.String(64))
     stack = relationship(Stack, backref=backref('user_creds'))
@@ -337,7 +337,7 @@ class Snapshot(BASE, HeatBase):
     name = sqlalchemy.Column('name', sqlalchemy.String(255), nullable=True)
     data = sqlalchemy.Column('data', Json)
     tenant = sqlalchemy.Column(
-        'tenant', sqlalchemy.String(256), nullable=False)
+        'tenant', sqlalchemy.String(64), nullable=False)
     status = sqlalchemy.Column('status', sqlalchemy.String(255))
     status_reason = sqlalchemy.Column('status_reason', sqlalchemy.String(255))
     stack = relationship(Stack, backref=backref('snapshot'))
